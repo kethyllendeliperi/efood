@@ -10,6 +10,7 @@ export const Container = styled.footer`
   justify-content: space-between;
   align-items: center;
   padding: 40px;
+  margin-top: 120px;
 `
 
 export const Redes = styled.img`

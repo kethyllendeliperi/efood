@@ -2,8 +2,8 @@ import Menu from '../Menu'
 
 import { List, Container } from './styles'
 
-import sushi from '../../assets/sushi.png'
-import pasta from '../../assets/pasta.png'
+import sushi from '../../assets/images/sushi.png'
+import pasta from '../../assets/images/pasta.png'
 
 const MenuList = () => (
   <Container>

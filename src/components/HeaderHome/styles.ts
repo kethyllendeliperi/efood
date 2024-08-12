@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import headerImage from '../../assets/fundo.png'
+import headerImage from '../../assets/images/fundo.png'
 import { cores } from '../../styles'
 
 export const HeaderImg = styled.header`
@@ -18,6 +18,7 @@ export const HeaderImg = styled.header`
 `
 export const LogoImg = styled.img`
   max-width: 125px;
+  height: 58px;
 `
 
 export const HeaderText = styled.h1`

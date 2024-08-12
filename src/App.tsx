@@ -1,16 +1,34 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Header from './components/Header'
-import { Container, GlobalCss } from './styles'
+import { GlobalCss } from './styles'
 import Footer from './components/Footer'
-import MenuList from './components/MenuList'
+import HeaderTrattoria from './components/HeaderTrattoria'
+import Banner from './components/Banner'
+import MenuList from './components/MenuOptions'
+import HeaderHome from './components/HeaderHome'
+import TrattoriaOptions from './components/MenuTrattoriaOptions'
 
 const rotas = createBrowserRouter([
   {
     path: '/',
     element: (
       <>
-        <MenuList />
+        <HeaderHome />
+        <div className="container">
+          <MenuList />
+        </div>
+      </>
+    )
+  },
+  {
+    path: '/perfil',
+    element: (
+      <>
+        <HeaderTrattoria />
+        <Banner />
+        <div className="container">
+          <TrattoriaOptions />
+        </div>
       </>
     )
   }
@@ -20,10 +38,7 @@ function App() {
   return (
     <>
       <GlobalCss />
-      <Header />
-      <Container>
-        <RouterProvider router={rotas} />
-      </Container>
+      <RouterProvider router={rotas} />
       <Footer />
     </>
   )

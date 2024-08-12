@@ -10,7 +10,7 @@ import {
   Title
 } from './styles'
 
-import star from '../../assets/estrela.png'
+import star from '../../assets/images/estrela.png'
 import Button from '../Button'
 
 type Props = {
