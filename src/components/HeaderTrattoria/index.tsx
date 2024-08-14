@@ -7,7 +7,7 @@ const HeaderTrattoria = () => {
   return (
     <>
       <HeaderImage>
-        <HeaderOptions>
+        <HeaderOptions className="container">
           <Link to="/">Restaurantes</Link>
           <LogoImg src={logoImg} alt="Logo" />
           <a href="#">0 produto(s) no carrinho</a>
