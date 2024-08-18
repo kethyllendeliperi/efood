@@ -1,39 +1,21 @@
 import MenuTrattoria from '../MenuTrattoria'
 import { ContainerList } from './styles'
-import pizza from '../../assets/images/pizza.png'
+import TrattoriaList from '../../models/TrattoriaList'
 
-const TrattoriaOptions = () => (
+export type Props = {
+  plates: TrattoriaList[]
+}
+
+const TrattoriaOptions = ({ plates }: Props) => (
   <ContainerList>
-    <MenuTrattoria
-      title="Pizza Marguerita"
-      description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!"
-      image={pizza}
-    />
-    <MenuTrattoria
-      title="Pizza Marguerita"
-      description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!"
-      image={pizza}
-    />
-    <MenuTrattoria
-      title="Pizza Marguerita"
-      description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!"
-      image={pizza}
-    />
-    <MenuTrattoria
-      title="Pizza Marguerita"
-      description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!"
-      image={pizza}
-    />
-    <MenuTrattoria
-      title="Pizza Marguerita"
-      description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!"
-      image={pizza}
-    />
-    <MenuTrattoria
-      title="Pizza Marguerita"
-      description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!"
-      image={pizza}
-    />
+    {plates.map((plate) => (
+      <MenuTrattoria
+        key={plate.id}
+        title={plate.title}
+        description={plate.description}
+        image={plate.image}
+      />
+    ))}
   </ContainerList>
 )
 

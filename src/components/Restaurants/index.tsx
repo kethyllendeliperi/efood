@@ -20,7 +20,7 @@ type Props = {
   image: string
 }
 
-const Menu = ({ title, description, image, tags }: Props) => (
+const Restaurants = ({ title, description, image, tags }: Props) => (
   <Card>
     <img src={image} alt={title} />
     <Tags>
@@ -48,4 +48,4 @@ const Menu = ({ title, description, image, tags }: Props) => (
   </Card>
 )
 
-export default Menu
+export default Restaurants
