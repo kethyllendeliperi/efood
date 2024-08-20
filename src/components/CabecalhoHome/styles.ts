@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import headerImage from '../../assets/images/fundo.png'
 import { cores } from '../../styles'
 
-export const HeaderImg = styled.header`
+export const CabecalhoImg = styled.header`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -21,7 +21,7 @@ export const LogoImg = styled.img`
   height: 58px;
 `
 
-export const HeaderText = styled.h1`
+export const CabecalhoTexto = styled.h1`
   font-size: 36px;
   color: ${cores.rosa};
   text-align: center;

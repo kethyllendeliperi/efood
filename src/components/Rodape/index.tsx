@@ -1,6 +1,6 @@
 import redes from '../../assets/images/redes_sociais.png'
 import logoImg from '../../assets/images/logo.png'
-import { LogoImg } from '../HeaderHome/styles'
+import { LogoImg } from '../CabecalhoHome/styles'
 import { Container, FooterText, Redes } from './styles'
 
 const Footer = () => (

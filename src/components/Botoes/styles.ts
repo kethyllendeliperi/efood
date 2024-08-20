@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { cores } from '../../styles'
 
-export const ButtonContainer = styled.button`
+export const BotaoContainer = styled.button`
   border: 0px solid ${cores.bege};
   color: ${cores.rosa};
   background-color: ${cores.bege};
@@ -14,7 +14,7 @@ export const ButtonContainer = styled.button`
   width: 100%;
   cursor: pointer;
 `
-export const ButtonLink = styled(Link)`
+export const BotaoLink = styled(Link)`
   border: 0px solid ${cores.rosa};
   color: ${cores.bege};
   background-color: ${cores.rosa};
