@@ -24,7 +24,7 @@ export const Titulo = styled.h3`
 export const Texto = styled.p`
   font-size: 14px;
   line-height: 22px;
-  padding: 8px;
+  margin: 8px 0;
 `
 
 export const Modal = styled.div`
@@ -37,6 +37,7 @@ export const Modal = styled.div`
   display: none;
   align-items: center;
   justify-content: center;
+  transition: 0.15s;
 
   &.visible {
     display: flex;

@@ -20,7 +20,7 @@ type Props = {
   imagem: string
 }
 
-const DetalhesCardapio = ({ titulo, descricao, imagem }: Props) => {
+const PerfilTemplate = ({ titulo, descricao, imagem }: Props) => {
   const [modalEstaAberto, setModalEstaAberto] = useState(false)
 
   return (
@@ -71,4 +71,4 @@ const DetalhesCardapio = ({ titulo, descricao, imagem }: Props) => {
   )
 }
 
-export default DetalhesCardapio
+export default PerfilTemplate

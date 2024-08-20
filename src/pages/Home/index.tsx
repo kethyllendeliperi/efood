@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import HeaderHome from '../../components/CabecalhoHome'
-import RestaurantsOptions from '../../components/ListaDeRestaurantes'
+import RestaurantsOptions from '../../components/RestaurantesLista'
 
 export type Restaurantes = {
   id: number
@@ -11,16 +11,14 @@ export type Restaurantes = {
   avaliacao: string
   descricao: string
   capa: string
-  cardapio: [
-    {
-      foto: string
-      preco: string
-      id: number
-      nome: string
-      descricao: string
-      porcao: string
-    }
-  ]
+  cardapio: {
+    foto: string
+    preco: number
+    id: number
+    nome: string
+    descricao: string
+    porcao: string
+  }[]
 }
 
 const Home = () => {

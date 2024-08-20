@@ -3,7 +3,7 @@ import logoImg from '../../assets/images/logo.png'
 import { LogoImg } from '../CabecalhoHome/styles'
 import { CabecalhoImage, CabecalhoOpcoes } from './styles'
 
-const RestaurantHeader = () => {
+const CabecalhoPerfil = () => {
   return (
     <>
       <CabecalhoImage>
@@ -17,4 +17,4 @@ const RestaurantHeader = () => {
   )
 }
 
-export default RestaurantHeader
+export default CabecalhoPerfil
