@@ -23,5 +23,5 @@ export const TitleCard = styled.h3`
 export const TextCard = styled.p`
   font-size: 14px;
   line-height: 22px;
-  padding: 8px;
+  margin: 8px 0;
 `
