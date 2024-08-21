@@ -1,54 +1,24 @@
-import PerfilTemplate from '../PerfilTemplate'
 import { ContainerLista } from './styles'
+import { Restaurantes } from '../../pages/Home'
+import PerfilTemplate from '../PerfilTemplate'
 
-const pratos = [
-  {
-    id: 1,
-    titulo: 'Pizza Marguerita',
-    descricao: 'A clássica Marguerita...',
-    imagem: 'path/to/pizza.png'
-  },
-  {
-    id: 2,
-    titulo: 'Pizza Marguerita',
-    descricao: 'A clássica Marguerita...',
-    imagem: 'path/to/pizza.png'
-  },
-  {
-    id: 3,
-    titulo: 'Pizza Marguerita',
-    descricao: 'A clássica Marguerita...',
-    imagem: 'path/to/pizza.png'
-  },
-  {
-    id: 4,
-    titulo: 'Pizza Marguerita',
-    descricao: 'A clássica Marguerita...',
-    imagem: 'path/to/pizza.png'
-  },
-  {
-    id: 5,
-    titulo: 'Pizza Marguerita',
-    descricao: 'A clássica Marguerita...',
-    imagem: 'path/to/pizza.png'
-  },
-  {
-    id: 6,
-    titulo: 'Pizza Marguerita',
-    descricao: 'A clássica Marguerita...',
-    imagem: 'path/to/pizza.png'
-  }
-]
+type Props = {
+  pratos: Restaurantes['cardapio']
+}
 
-const PerfilLista = () => (
+const PerfilLista = ({ pratos }: Props) => (
   <ContainerLista className="container">
     {pratos.map((prato) => (
-      <PerfilTemplate
-        key={prato.id}
-        titulo={prato.titulo}
-        descricao={prato.descricao}
-        imagem={prato.imagem}
-      />
+      <li key={prato.id}>
+        <PerfilTemplate
+          foto={prato.foto}
+          preco={prato.preco}
+          id={prato.id}
+          nome={prato.nome}
+          descricao={prato.descricao}
+          porcao={prato.porcao}
+        />
+      </li>
     ))}
   </ContainerLista>
 )

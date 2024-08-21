@@ -5,7 +5,7 @@ import { cores } from '../../styles'
 export const MenuCard = styled.div`
   width: 100%;
   max-width: 320px;
-  height: 338px;
+  max-height: 338px;
   background-color: ${cores.rosa};
   padding: 8px;
   color: ${cores.bege};
@@ -14,11 +14,13 @@ export const MenuCard = styled.div`
 export const Imagem = styled.img`
   width: 304px;
   height: 167px;
+  object-fit: cover;
 `
 
 export const Titulo = styled.h3`
   font-size: 16px;
   font-weight: bold;
+  margin-top: 8px;
 `
 
 export const Texto = styled.p`

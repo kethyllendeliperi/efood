@@ -6,13 +6,6 @@ export type Props = {
   restaurantes: Restaurantes[]
 }
 
-// export const formataPreco = (preco: number) => {
-//   return new Intl.NumberFormat('pt-BR', {
-//     style: 'currency',
-//     currency: 'BRL'
-//   }).format(preco)
-// }
-
 const RestaurantesLista = ({ restaurantes }: Props) => {
   const ordenaResturantes = (restaurantes: Restaurantes[]) => {
     return restaurantes.sort((restaurante1, restaurante2) => {
@@ -38,10 +31,6 @@ const RestaurantesLista = ({ restaurantes }: Props) => {
       tags.push(letraMaiuscula(restaurante.tipo))
     }
 
-    // if (cardapio.preco.current) {
-    //   tags.push(formataPreco(restaurantes.preco))
-    // }
-
     return tags
   }
 
@@ -50,6 +39,7 @@ const RestaurantesLista = ({ restaurantes }: Props) => {
       <Lista>
         {restaurantesOrdenados.map((restaurante) => (
           <RestaurantesTemplate
+            id={restaurante.id}
             key={restaurante.id}
             titulo={restaurante.titulo}
             tags={getRestaurantesTags(restaurante)}

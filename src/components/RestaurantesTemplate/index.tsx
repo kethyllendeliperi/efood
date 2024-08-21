@@ -21,6 +21,7 @@ type Props = {
   descricao: string
   tags: string[]
   imagem: string
+  id: number
 }
 
 const RestaurantesTemplate = ({
@@ -28,7 +29,8 @@ const RestaurantesTemplate = ({
   avaliacao,
   descricao,
   tags,
-  imagem
+  imagem,
+  id
 }: Props) => {
   const getDescricao = (descricao: string) => {
     if (descricao.length > 198) {
@@ -53,7 +55,11 @@ const RestaurantesTemplate = ({
           </Avaliacao>
         </Titulo>
         <CardDescricao>{getDescricao(descricao)}</CardDescricao>
-        <Botoes to="/perfil" tipo="link" titulo="Clique para ver o cardápio">
+        <Botoes
+          to={`/perfil/${id}`}
+          tipo="link"
+          titulo="Clique para ver o cardápio"
+        >
           Saiba mais
         </Botoes>
       </CardContainer>

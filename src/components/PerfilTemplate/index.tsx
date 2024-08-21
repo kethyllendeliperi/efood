@@ -15,20 +15,37 @@ import botaoFechar from '../../assets/images/close.png'
 import Botoes from '../Botoes'
 
 type Props = {
-  titulo: string
+  foto: string
+  preco: number
+  id: number
+  nome: string
   descricao: string
-  imagem: string
+  porcao: string
 }
 
-const PerfilTemplate = ({ titulo, descricao, imagem }: Props) => {
+export const formataPreco = (preco: number) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(preco)
+}
+
+const PerfilTemplate = ({ foto, preco, nome, descricao, porcao }: Props) => {
   const [modalEstaAberto, setModalEstaAberto] = useState(false)
+
+  const getDescricao = (descricao: string) => {
+    if (descricao.length > 115) {
+      return descricao.slice(0, 118) + '...'
+    }
+    return descricao
+  }
 
   return (
     <>
       <MenuCard>
-        <Imagem src={imagem} />
-        <Titulo>{titulo}</Titulo>
-        <Texto>{descricao}</Texto>
+        <Imagem src={foto} />
+        <Titulo>{nome}</Titulo>
+        <Texto>{getDescricao(descricao)}</Texto>
         <Botoes
           tipo="botao"
           titulo="Clique aqui para ver detalhes do prato"
@@ -39,27 +56,19 @@ const PerfilTemplate = ({ titulo, descricao, imagem }: Props) => {
       </MenuCard>
       <Modal className={modalEstaAberto ? 'visible' : ''}>
         <ModalContainer className="container">
-          <img src={imagem} alt="Imagem da pizza Marguerita" />
+          <img src={foto} alt="Imagem da pizza Marguerita" />
           <ModalConteudo>
-            <h4>{titulo}</h4>
+            <h4>{nome}</h4>
             <img
               src={botaoFechar}
               alt="Botão de fechar"
               onClick={() => setModalEstaAberto(false)}
             />
-            <p>
-              A pizza Margherita é uma pizza clássica da culinária italiana,
-              reconhecida por sua simplicidade e sabor inigualável. Ela é feita
-              com uma base de massa fina e crocante, coberta com molho de tomate
-              fresco, queijo mussarela de alta qualidade, manjericão fresco e
-              azeite de oliva extra-virgem. A combinação de sabores é perfeita,
-              com o molho de tomate suculento e ligeiramente ácido, o queijo
-              derretido e cremoso e as folhas de manjericão frescas, que
-              adicionam um toque de sabor herbáceo. É uma pizza simples, mas
-              deliciosa, que agrada a todos os paladares e é uma ótima opção
-              para qualquer ocasião. <br /> <span>Serve: de 2 a 3 pessoas</span>
-            </p>
-            <TamanhoBotao>Adicionar ao carrinho - R$ 60,90</TamanhoBotao>
+            <p>{descricao}</p>
+            <p>Serve: {porcao}</p>
+            <TamanhoBotao>
+              Adicionar ao carrinho - {formataPreco(preco)}
+            </TamanhoBotao>
           </ModalConteudo>
         </ModalContainer>
         <div
