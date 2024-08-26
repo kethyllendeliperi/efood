@@ -18,7 +18,7 @@ export const Redes = styled.img`
   height: 24px;
 `
 
-export const FooterText = styled.p`
+export const TextoRodape = styled.p`
   font-size: 10px;
   line-height: 12px;
   text-align: center;

@@ -1,7 +1,8 @@
 import { BrowserRouter } from 'react-router-dom'
 
 import { GlobalCss } from './styles'
-import Footer from './components/Footer'
+
+import Footer from './components/Rodape'
 
 import Rotas from './routes'
 

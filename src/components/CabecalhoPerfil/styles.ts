@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { HeaderImg } from '../HeaderHome/styles'
+import { CabecalhoImg } from '../CabecalhoHome/styles'
 import { cores } from '../../styles'
 
-export const HeaderImage = styled(HeaderImg)`
+export const CabecalhoImage = styled(CabecalhoImg)`
   height: 163px;
   width: 100%;
   background-size: cover;
@@ -14,7 +14,7 @@ export const HeaderImage = styled(HeaderImg)`
   }
 `
 
-export const HeaderOptions = styled.div`
+export const CabecalhoOpcoes = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;

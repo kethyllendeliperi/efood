@@ -1,14 +1,20 @@
-import { Image, Title, Text } from './styles'
+import { Imagem } from './styles'
+import { Restaurantes } from '../../pages/Home'
+import { letraMaiuscula } from '../RestaurantesLista'
 
-import bannerImg from '../../assets/images/banner.png'
+type Props = {
+  cardapio: Restaurantes
+}
 
-const Banner = () => (
-  <Image style={{ backgroundImage: `url(${bannerImg})` }}>
-    <div className="container">
-      <Text>Italiana</Text>
-      <Title>La Dolce Vita Trattoria</Title>
-    </div>
-  </Image>
-)
+const Banner = ({ cardapio }: Props) => {
+  return (
+    <Imagem style={{ backgroundImage: `url(${cardapio.capa})` }}>
+      <div className="container">
+        <p>{letraMaiuscula(cardapio.tipo)}</p>
+        <p>{cardapio.titulo}</p>
+      </div>
+    </Imagem>
+  )
+}
 
 export default Banner

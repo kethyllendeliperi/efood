@@ -5,11 +5,19 @@ import { TagContainer } from '../Tag/styles'
 export const Card = styled.div`
   background-color: ${cores.branco};
   border: 1px solid ${cores.rosa};
-  margin-bottom: 48px;
   position: relative;
+  width: 472px;
+  height: 398px;
 
   ${TagContainer} {
     margin-right: 6px;
+  }
+
+  img {
+    width: 100%;
+    max-width: 472px;
+    height: 217px;
+    object-fit: cover;
   }
 `
 
@@ -17,19 +25,18 @@ export const CardContainer = styled.div`
   padding: 8px;
 `
 
-export const CardTitle = styled.h3`
+export const CardTitulo = styled.h3`
   font-size: 18px;
   font-weight: bold;
   color: ${cores.rosa};
   display: block;
-  margin-bottom: 16px;
 `
-export const Title = styled.div`
+export const Titulo = styled.div`
   display: flex;
   justify-content: space-between;
 `
 
-export const Rating = styled.div`
+export const Avaliacao = styled.div`
   display: flex;
   align-items: center;
   color: ${cores.rosa};
@@ -37,22 +44,31 @@ export const Rating = styled.div`
   font-size: 18px;
 
   p {
-    margin-right: 4px;
+    margin-right: 26px;
   }
 
   img {
     width: 21px;
     height: 21px;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
+  }
+
+  p,
+  img {
+    position: absolute;
+    top: 228px;
+    right: 8px;
+    cursor: pointer;
   }
 `
 
-export const CardDescription = styled.p`
+export const CardDescricao = styled.p`
   font-size: 14px;
   line-height: 22px;
   color: ${cores.rosa};
   display: block;
-  margin-bottom: 16px;
+  margin-top: 16px;
+  margin-bottom: 32px;
 `
 
 export const Tags = styled.div`
