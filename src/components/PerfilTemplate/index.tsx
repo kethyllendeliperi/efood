@@ -1,5 +1,4 @@
 import { useState } from 'react'
-
 import {
   MenuCard,
   Imagem,
@@ -10,9 +9,10 @@ import {
   Titulo,
   ModalConteudo
 } from './styles'
-
 import botaoFechar from '../../assets/images/close.png'
 import Botoes from '../Botoes'
+import { aberto, add, Prato } from '../../store/reducers/carrinho'
+import { useDispatch } from 'react-redux'
 
 type Props = {
   foto: string
@@ -30,19 +30,34 @@ export const formataPreco = (preco: number) => {
   }).format(preco)
 }
 
-const PerfilTemplate = ({ foto, preco, nome, descricao, porcao }: Props) => {
+const PerfilTemplate = ({
+  foto,
+  preco,
+  id,
+  nome,
+  descricao,
+  porcao
+}: Props) => {
   const [modalEstaAberto, setModalEstaAberto] = useState(false)
+  const dispatch = useDispatch()
 
   const getDescricao = (descricao: string) => {
-    if (descricao.length > 115) {
-      return descricao.slice(0, 118) + '...'
+    if (descricao.length > 110) {
+      return descricao.slice(0, 113) + '...'
     }
     return descricao
   }
 
+  const addAoCarrinho = () => {
+    const prato: Prato = { foto, preco, id, nome, descricao, porcao }
+    dispatch(add(prato))
+    setModalEstaAberto(false)
+    dispatch(aberto())
+  }
+
   return (
     <>
-      <MenuCard>
+      <MenuCard className="menuCard">
         <Imagem src={foto} />
         <Titulo>{nome}</Titulo>
         <Texto>{getDescricao(descricao)}</Texto>
@@ -56,17 +71,17 @@ const PerfilTemplate = ({ foto, preco, nome, descricao, porcao }: Props) => {
       </MenuCard>
       <Modal className={modalEstaAberto ? 'visible' : ''}>
         <ModalContainer className="container">
-          <img src={foto} alt="Imagem da pizza Marguerita" />
+          <img src={foto} alt={`Imagem do prato ${nome}`} />
           <ModalConteudo>
-            <h4>{nome}</h4>
             <img
               src={botaoFechar}
               alt="Botão de fechar"
               onClick={() => setModalEstaAberto(false)}
             />
+            <h4>{nome}</h4>
             <p>{descricao}</p>
             <p>Serve: {porcao}</p>
-            <TamanhoBotao>
+            <TamanhoBotao onClick={addAoCarrinho}>
               Adicionar ao carrinho - {formataPreco(preco)}
             </TamanhoBotao>
           </ModalConteudo>

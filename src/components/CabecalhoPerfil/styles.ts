@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { CabecalhoImg } from '../CabecalhoHome/styles'
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const CabecalhoImage = styled(CabecalhoImg)`
   height: 163px;
@@ -11,6 +11,25 @@ export const CabecalhoImage = styled(CabecalhoImg)`
     color: ${cores.rosa};
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 18px;
+
+    a {
+      width: 98px;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 14px;
+
+    a {
+      width: 78px;
+      text-align: center;
+    }
   }
 `
 

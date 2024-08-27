@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-
+import { useGetOpcoesRestaurantesQuery } from '../../services/api'
 import HeaderHome from '../../components/CabecalhoHome'
 import RestaurantsOptions from '../../components/RestaurantesLista'
 
@@ -22,22 +21,20 @@ export type Restaurantes = {
 }
 
 const Home = () => {
-  const [opcoes, setOpcoes] = useState<Restaurantes[]>([])
+  const { data } = useGetOpcoesRestaurantesQuery()
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/efood/restaurantes')
-      .then((res) => res.json())
-      .then((res) => setOpcoes(res))
-  }, [])
+  if (data) {
+    return (
+      <>
+        <HeaderHome />
+        <div className="container">
+          <RestaurantsOptions restaurantes={data} />
+        </div>
+      </>
+    )
+  }
 
-  return (
-    <>
-      <HeaderHome />
-      <div className="container">
-        <RestaurantsOptions restaurantes={opcoes} />
-      </div>
-    </>
-  )
+  return <h4>Carregando...</h4>
 }
 
 export default Home

@@ -7,7 +7,7 @@ import {
   CardTitulo,
   Avaliacao,
   Tags,
-  Titulo
+  CardCabecalho
 } from './styles'
 
 import star from '../../assets/images/estrela.png'
@@ -47,13 +47,13 @@ const RestaurantesTemplate = ({
         ))}
       </Tags>
       <CardContainer>
-        <Titulo>
+        <CardCabecalho>
           <CardTitulo>{titulo}</CardTitulo>
           <Avaliacao>
             <p>{avaliacao}</p>
             <img src={star} alt="Estrela de avaliação" />
           </Avaliacao>
-        </Titulo>
+        </CardCabecalho>
         <CardDescricao>{getDescricao(descricao)}</CardDescricao>
         <Botoes
           to={`/perfil/${id}`}

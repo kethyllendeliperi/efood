@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const TagContainer = styled.div`
   background-color: ${cores.rosa};
@@ -8,4 +8,14 @@ export const TagContainer = styled.div`
   font-weight: bold;
   padding: 6px 4px;
   display: inline-block;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    padding: 8px 6px;
+    font-size: 18px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 6px 4px;
+    font-size: 14px;
+  }
 `
