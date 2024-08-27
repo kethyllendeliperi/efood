@@ -21,12 +21,6 @@ export const Card = styled.div`
     object-fit: cover;
   }
 
-  @media (min-width: ${breakpoints.tablet}) {
-    max-width: 472px;
-    height: 398px;
-    width: 100%;
-  }
-
   @media (max-width: ${breakpoints.tablet}) {
     height: 420px;
 
