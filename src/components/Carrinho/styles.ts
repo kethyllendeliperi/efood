@@ -37,6 +37,27 @@ export const BarraLateral = styled.aside`
     font-size: 18px;
     font-weight: bold;
   }
+
+  h4 {
+    font-size: 16px;
+    font-weight: bold;
+    color: ${cores.bege};
+    margin-bottom: 8px;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: bold;
+    color: ${cores.bege};
+    margin: 8px 0;
+  }
+
+  input {
+    background-color: ${cores.bege};
+    border: 1px solid ${cores.bege};
+    width: 100%;
+    height: 32px;
+  }
 `
 export const PedidoContainer = styled.ul`
   background-color: ${cores.bege};
@@ -102,4 +123,52 @@ export const TotalPedido = styled.div`
   font-size: 14px;
   font-weight: bold;
   color: ${cores.bege};
+`
+export const EntregaContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`
+export const EntregaInput = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const NumeroCvv = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  .numeroCartao {
+    max-width: 228px;
+
+    input {
+      margin-right: 30px;
+    }
+  }
+
+  .cvv {
+    max-width: 87px;
+  }
+`
+
+export const InfosContainer = styled.div`
+  display: flex;
+  grid-template-columns: 1fr 1fr;
+  gap: 34px;
+`
+
+export const BotoesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+`
+export const MensagemContainer = styled.div`
+  margin-top: 16px;
+
+  p {
+    font-size: 14px;
+    color: ${cores.bege};
+    margin-bottom: 24px;
+  }
 `
