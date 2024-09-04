@@ -13,24 +13,6 @@ export const CabecalhoImage = styled(CabecalhoImg)`
     font-weight: bold;
     cursor: pointer;
   }
-
-  @media (max-width: ${breakpoints.tablet}) {
-    font-size: 18px;
-
-    a {
-      width: 98px;
-      text-align: center;
-    }
-  }
-
-  @media (max-width: ${breakpoints.mobile}) {
-    font-size: 14px;
-
-    a {
-      width: 78px;
-      text-align: center;
-    }
-  }
 `
 
 export const CabecalhoOpcoes = styled.div`

@@ -22,9 +22,4 @@ export const BotaoLink = styled(Link)`
   font-weight: bold;
   padding: 4px 6px;
   text-decoration: none;
-
-  @media (max-width: ${breakpoints.tablet}) {
-    padding: 6px 8px;
-    font-size: 16px;
-  }
 `

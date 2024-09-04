@@ -1,6 +1,6 @@
 import { useGetOpcoesRestaurantesQuery } from '../../services/api'
-import HeaderHome from '../../components/CabecalhoHome'
 import RestaurantsOptions from '../../components/RestaurantesLista'
+import HeaderHome from '../../components/CabecalhoHome'
 
 export type Restaurantes = {
   id: number

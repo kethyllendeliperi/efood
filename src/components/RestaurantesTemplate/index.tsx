@@ -1,16 +1,7 @@
-import Tag from '../Tag'
-
-import {
-  Card,
-  CardContainer,
-  CardDescricao,
-  CardTitulo,
-  Avaliacao,
-  Tags,
-  CardCabecalho
-} from './styles'
-
+import * as S from './styles'
 import star from '../../assets/images/estrela.png'
+
+import Tag from '../Tag'
 import Botoes from '../Botoes'
 
 type Props = {
@@ -39,31 +30,31 @@ const RestaurantesTemplate = ({
     return descricao
   }
   return (
-    <Card className="container">
+    <S.Card className="container">
       <img src={imagem} alt={titulo} />
-      <Tags>
+      <S.Tags>
         {tags.map((tag) => (
           <Tag key={tag}>{tag}</Tag>
         ))}
-      </Tags>
-      <CardContainer>
-        <CardCabecalho>
-          <CardTitulo>{titulo}</CardTitulo>
-          <Avaliacao>
+      </S.Tags>
+      <S.CardContainer>
+        <S.CardCabecalho>
+          <S.CardTitulo>{titulo}</S.CardTitulo>
+          <S.Avaliacao>
             <p>{avaliacao}</p>
             <img src={star} alt="Estrela de avaliação" />
-          </Avaliacao>
-        </CardCabecalho>
-        <CardDescricao>{getDescricao(descricao)}</CardDescricao>
+          </S.Avaliacao>
+        </S.CardCabecalho>
+        <S.CardDescricao>{getDescricao(descricao)}</S.CardDescricao>
         <Botoes
           to={`/perfil/${id}`}
           tipo="link"
-          titulo="Clique para ver o cardápio"
+          titulo="Clique para ver o S.cardápio"
         >
           Saiba mais
         </Botoes>
-      </CardContainer>
-    </Card>
+      </S.CardContainer>
+    </S.Card>
   )
 }
 

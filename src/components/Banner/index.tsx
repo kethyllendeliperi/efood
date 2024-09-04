@@ -1,4 +1,5 @@
 import { Imagem } from './styles'
+
 import { Restaurantes } from '../../pages/Home'
 import { letraMaiuscula } from '../RestaurantesLista'
 

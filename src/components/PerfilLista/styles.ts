@@ -9,14 +9,4 @@ export const ContainerLista = styled(Lista)`
   li {
     max-height: 320px;
   }
-
-  @media (max-width: ${breakpoints.tablet}) {
-    grid-template-columns: 1fr 1fr;
-    row-gap: 52px;
-  }
-
-  @media (max-width: ${breakpoints.mobile}) {
-    grid-template-columns: 1fr;
-    row-gap: 32px;
-  }
 `

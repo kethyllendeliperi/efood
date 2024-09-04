@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom'
 import Banner from '../../components/Banner'
 import CabecalhoPerfil from '../../components/CabecalhoPerfil'
 import PerfilLista from '../../components/PerfilLista'
-import { useGetCardapioQuery } from '../../services/api'
 import Carrinho from '../../components/Carrinho'
+
+import { useGetCardapioQuery } from '../../services/api'
 
 const Perfil = () => {
   const { id } = useParams()

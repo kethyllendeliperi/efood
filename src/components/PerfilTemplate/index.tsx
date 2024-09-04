@@ -1,18 +1,11 @@
 import { useState } from 'react'
-import {
-  MenuCard,
-  Imagem,
-  Modal,
-  TamanhoBotao,
-  ModalContainer,
-  Texto,
-  Titulo,
-  ModalConteudo
-} from './styles'
-import botaoFechar from '../../assets/images/close.png'
-import Botoes from '../Botoes'
-import { aberto, add, Prato } from '../../store/reducers/carrinho'
 import { useDispatch } from 'react-redux'
+
+import * as S from './styles'
+import botaoFechar from '../../assets/images/close.png'
+
+import { aberto, add, Prato } from '../../store/reducers/carrinho'
+import Botoes from '../Botoes'
 
 type Props = {
   foto: string
@@ -57,10 +50,10 @@ const PerfilTemplate = ({
 
   return (
     <>
-      <MenuCard className="menuCard">
-        <Imagem src={foto} />
-        <Titulo>{nome}</Titulo>
-        <Texto>{getDescricao(descricao)}</Texto>
+      <S.MenuCard className="menuCard">
+        <S.Imagem src={foto} />
+        <S.Titulo>{nome}</S.Titulo>
+        <S.Texto>{getDescricao(descricao)}</S.Texto>
         <Botoes
           tipo="botao"
           titulo="Clique aqui para ver detalhes do prato"
@@ -68,11 +61,11 @@ const PerfilTemplate = ({
         >
           Mais detalhes
         </Botoes>
-      </MenuCard>
-      <Modal className={modalEstaAberto ? 'visible' : ''}>
-        <ModalContainer className="container">
+      </S.MenuCard>
+      <S.Modal className={modalEstaAberto ? 'visible' : ''}>
+        <S.ModalContainer className="container">
           <img src={foto} alt={`Imagem do prato ${nome}`} />
-          <ModalConteudo>
+          <S.ModalConteudo>
             <img
               src={botaoFechar}
               alt="Botão de fechar"
@@ -81,16 +74,16 @@ const PerfilTemplate = ({
             <h4>{nome}</h4>
             <p>{descricao}</p>
             <p>Serve: {porcao}</p>
-            <TamanhoBotao onClick={addAoCarrinho}>
+            <S.TamanhoBotao onClick={addAoCarrinho}>
               Adicionar ao carrinho - {formataPreco(preco)}
-            </TamanhoBotao>
-          </ModalConteudo>
-        </ModalContainer>
+            </S.TamanhoBotao>
+          </S.ModalConteudo>
+        </S.ModalContainer>
         <div
           className="overlay"
           onClick={() => setModalEstaAberto(false)}
         ></div>
-      </Modal>
+      </S.Modal>
     </>
   )
 }

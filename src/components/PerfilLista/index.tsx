@@ -1,4 +1,5 @@
 import { ContainerLista } from './styles'
+
 import { Restaurantes } from '../../pages/Home'
 import PerfilTemplate from '../PerfilTemplate'
 

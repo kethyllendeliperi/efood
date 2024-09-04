@@ -1,4 +1,4 @@
-import { BotaoContainer, BotaoLink } from './styles'
+import * as S from './styles'
 
 export type Props = {
   tipo: 'botao' | 'link'
@@ -6,16 +6,21 @@ export type Props = {
   to?: string
   onClick?: () => void
   children: string
+  disabled?: boolean
 }
 
-const Botoes = ({ tipo, titulo, to, onClick, children }: Props) => {
+const Botoes = ({ tipo, titulo, to, onClick, children, disabled }: Props) => {
   if (tipo === 'botao') {
-    return <BotaoContainer onClick={onClick}>{children}</BotaoContainer>
+    return (
+      <S.BotaoContainer onClick={onClick} disabled={disabled}>
+        {children}
+      </S.BotaoContainer>
+    )
   }
   return (
-    <BotaoLink to={to as string} title={titulo}>
+    <S.BotaoLink to={to as string} title={titulo}>
       {children}
-    </BotaoLink>
+    </S.BotaoLink>
   )
 }
 

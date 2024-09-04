@@ -57,6 +57,18 @@ export const BarraLateral = styled.aside`
     border: 1px solid ${cores.bege};
     width: 100%;
     height: 32px;
+    padding: 0 8px;
+
+    &.error {
+      border: 2px solid red;
+    }
+  }
+
+  .texto-vazio {
+    font-size: 14px;
+    font-weight: bold;
+    color: ${cores.bege};
+    text-align: center;
   }
 `
 export const PedidoContainer = styled.ul`
@@ -138,7 +150,7 @@ export const NumeroCvv = styled.div`
   display: flex;
   justify-content: space-between;
 
-  .numeroCartao {
+  #numeroNoCartao {
     max-width: 228px;
 
     input {
@@ -146,7 +158,7 @@ export const NumeroCvv = styled.div`
     }
   }
 
-  .cvv {
+  #codigoDeSeguranca {
     max-width: 87px;
   }
 `

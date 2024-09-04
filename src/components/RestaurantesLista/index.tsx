@@ -1,6 +1,7 @@
+import * as S from './styles'
+
 import { Restaurantes } from '../../pages/Home'
 import RestaurantesTemplate from '../RestaurantesTemplate'
-import { Lista, Container } from './styles'
 
 export type Props = {
   restaurantes: Restaurantes[]
@@ -25,8 +26,8 @@ const RestaurantesLista = ({ restaurantes }: Props) => {
   }
 
   return (
-    <Container className="container">
-      <Lista>
+    <S.Container className="container">
+      <S.Lista>
         {restaurantes.map((restaurante) => (
           <RestaurantesTemplate
             id={restaurante.id}
@@ -39,8 +40,8 @@ const RestaurantesLista = ({ restaurantes }: Props) => {
             imagem={restaurante.capa}
           />
         ))}
-      </Lista>
-    </Container>
+      </S.Lista>
+    </S.Container>
   )
 }
 

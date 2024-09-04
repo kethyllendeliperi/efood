@@ -1,18 +1,19 @@
-import redes from '../../assets/images/redes_sociais.png'
-import logoImg from '../../assets/images/logo.png'
+import * as S from './styles'
+
 import { LogoImg } from '../CabecalhoHome/styles'
-import { Container, TextoRodape, Redes } from './styles'
+import logoImg from '../../assets/images/logo.png'
+import redes from '../../assets/images/redes_sociais.png'
 
 const Rodape = () => (
-  <Container>
+  <S.Container>
     <LogoImg src={logoImg} alt="Logo" />
-    <Redes src={redes} alt="Redes Sociais Efood" />
-    <TextoRodape>
+    <S.Redes src={redes} alt="Redes Sociais Efood" />
+    <S.TextoRodape>
       A Efood é uma plataforma para divulgação de estabelecimentos, a
       responsabilidade pela entrega, qualidade <br /> dos produtos é toda do
       estabelecimento contratado.
-    </TextoRodape>
-  </Container>
+    </S.TextoRodape>
+  </S.Container>
 )
 
 export default Rodape

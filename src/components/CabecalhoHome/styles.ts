@@ -19,16 +19,6 @@ export const CabecalhoImg = styled.header`
 export const LogoImg = styled.img`
   max-width: 125px;
   height: 58px;
-
-  @media (max-width: ${breakpoints.tablet}) {
-    height: 68px;
-    max-width: 135px;
-  }
-
-  @media (max-width: ${breakpoints.tablet}) {
-    height: 48px;
-    max-width: 115px;
-  }
 `
 
 export const CabecalhoTexto = styled.h1`
@@ -37,8 +27,4 @@ export const CabecalhoTexto = styled.h1`
   text-align: center;
   line-height: 42px;
   margin-bottom: 40px;
-
-  @media (max-width: ${breakpoints.mobile}) {
-    font-size: 30px;
-  }
 `

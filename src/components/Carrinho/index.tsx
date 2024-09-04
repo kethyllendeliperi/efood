@@ -1,23 +1,28 @@
-import Botoes from '../Botoes'
-import * as S from './styles'
-
-import excluir from '../../assets/images/lixeira.png'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootReducer } from '../../store'
-import { fechado, remover } from '../../store/reducers/carrinho'
-import { formataPreco } from '../PerfilTemplate'
-import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import InputMask from 'react-input-mask'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+
+import * as S from './styles'
+import excluir from '../../assets/images/lixeira.png'
+
 import { usePurchaseMutation } from '../../services/api'
+import { RootReducer } from '../../store'
+import { fechado, limpar, remover } from '../../store/reducers/carrinho'
+import { formataPreco } from '../PerfilTemplate'
+import Botoes from '../Botoes'
 
 const Carrinho = () => {
   const { estaAberto, itens } = useSelector(
     (state: RootReducer) => state.carrinho
   )
 
-  const [purchase, { isLoading, isError, data, isSuccess }] =
-    usePurchaseMutation()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const [purchase, { isLoading, data, isSuccess }] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
@@ -90,25 +95,21 @@ const Carrinho = () => {
             }
           }
         },
-        products: [
-          {
-            id: 1,
-            price: 10
-          }
-        ]
+        products: itens.map((item) => ({
+          id: item.id,
+          price: item.preco as number
+        }))
       })
     }
   })
 
-  const getMensagemDeErro = (fieldName: string, mensagem?: string) => {
+  const verificaErro = (fieldName: string) => {
     const estaAlterado = fieldName in form.touched
     const estaInvalido = fieldName in form.errors
+    const temErro = estaAlterado && estaInvalido
 
-    if (estaAlterado && estaInvalido) return mensagem
-    return ''
+    return temErro
   }
-
-  const dispatch = useDispatch()
 
   const [etapa, setEtapa] = useState('pedido')
   const fechaCarrinho = () => {
@@ -128,12 +129,19 @@ const Carrinho = () => {
     dispatch(remover(id))
   }
 
+  const validaCamposEntrega = () => {
+    const { nomeCompleto, endereco, cidade, cep, numero } = form.values
+    return nomeCompleto && endereco && cidade && cep && numero
+  }
+
   const continuarComEntrega = () => {
     setEtapa('entrega')
   }
 
   const continuarComPagamento = () => {
-    setEtapa('pagamento')
+    if (validaCamposEntrega()) {
+      setEtapa('pagamento')
+    }
   }
 
   const voltarParaCarrinho = () => {
@@ -144,274 +152,68 @@ const Carrinho = () => {
     setEtapa('entrega')
   }
 
-  const continuarParaMensagem = () => {
-    setEtapa('mensagem')
+  const irParaHome = () => {
+    dispatch(fechado())
+    navigate('/')
   }
 
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(limpar())
+    }
+  }, [isSuccess, dispatch])
+
   return (
-    <form onSubmit={form.handleSubmit}>
+    <>
       {etapa === 'pedido' && (
         <S.CarrinhoContainer className={estaAberto ? 'aberto' : ''}>
           <S.Overlay onClick={fechaCarrinho} />
           <S.BarraLateral>
-            {itens.map((item) => (
-              <S.PedidoContainer key={item.id}>
-                <S.PedidoInfos>
-                  <img className="imgPedido" src={item.foto} alt="" />
-                  <div>
-                    <h3>{item.nome}</h3>
-                    <p>{formataPreco(item.preco)}</p>
-                  </div>
-                  <img
-                    onClick={() => removeItem(item.id)}
-                    className="excluirItem"
-                    src={excluir}
-                    alt="Botão de exclusão do item"
-                  />
-                </S.PedidoInfos>
-              </S.PedidoContainer>
-            ))}
-            <S.TotalPedido>
-              <p>Valor total</p>
-              <p>{formataPreco(getPrecoTotal())}</p>
-            </S.TotalPedido>
-            <Botoes
-              titulo="Clique aqui para continuar com seu pedido"
-              tipo="botao"
-              onClick={continuarComEntrega}
-            >
-              Continuar com a entrega
-            </Botoes>
+            {itens.length > 0 ? (
+              <>
+                {itens.map((item) => (
+                  <S.PedidoContainer key={item.id}>
+                    <S.PedidoInfos>
+                      <img className="imgPedido" src={item.foto} alt="" />
+                      <div>
+                        <h3>{item.nome}</h3>
+                        <p>{formataPreco(item.preco)}</p>
+                      </div>
+                      <img
+                        onClick={() => removeItem(item.id)}
+                        className="excluirItem"
+                        src={excluir}
+                        alt="Botão de exclusão do item"
+                      />
+                    </S.PedidoInfos>
+                  </S.PedidoContainer>
+                ))}
+                <S.TotalPedido>
+                  <p>Valor total</p>
+                  <p>{formataPreco(getPrecoTotal())}</p>
+                </S.TotalPedido>
+                <Botoes
+                  titulo="Clique aqui para continuar com seu pedido"
+                  tipo="botao"
+                  onClick={continuarComEntrega}
+                >
+                  Continuar com a entrega
+                </Botoes>
+              </>
+            ) : (
+              <p className="texto-vazio">
+                O carrinho está vazio. <br /> Adicione um prato para continuar
+                com a compra.
+              </p>
+            )}
           </S.BarraLateral>
         </S.CarrinhoContainer>
       )}
-      {etapa === 'entrega' && (
+      {isSuccess && data ? (
         <S.CarrinhoContainer className={estaAberto ? 'aberto' : ''}>
           <S.Overlay onClick={fechaCarrinho} />
           <S.BarraLateral>
-            <h4>Entrega</h4>
-            <div>
-              <S.EntregaInput>
-                <label htmlFor="nomeCompleto">Quem irá receber</label>
-                <input
-                  id="nomeCompleto"
-                  type="text"
-                  name="nomeCompleto"
-                  value={form.values.nomeCompleto}
-                  onChange={form.handleChange}
-                  onBlur={form.handleBlur}
-                />
-                <small>
-                  {getMensagemDeErro('nomeCompleto', form.errors.nomeCompleto)}
-                </small>
-              </S.EntregaInput>
-              <S.EntregaInput>
-                <label htmlFor="endereco">Endereço</label>
-                <input
-                  id="endereco"
-                  type="text"
-                  name="endereco"
-                  value={form.values.endereco}
-                  onChange={form.handleChange}
-                  onBlur={form.handleBlur}
-                />
-                <small>
-                  {getMensagemDeErro('endereco', form.errors.endereco)}
-                </small>
-              </S.EntregaInput>
-              <S.EntregaInput>
-                <label htmlFor="cidade">Cidade</label>
-                <input
-                  id="cidade"
-                  type="text"
-                  name="cidade"
-                  value={form.values.cidade}
-                  onChange={form.handleChange}
-                  onBlur={form.handleBlur}
-                />
-                <small>{getMensagemDeErro('cidade', form.errors.cidade)}</small>
-              </S.EntregaInput>
-              <S.InfosContainer>
-                <S.EntregaInput>
-                  <label htmlFor="cep">CEP</label>
-                  <input
-                    id="cep"
-                    type="text"
-                    name="cep"
-                    value={form.values.cep}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                  />
-                  <small>{getMensagemDeErro('cep', form.errors.cep)}</small>
-                </S.EntregaInput>
-                <S.EntregaInput>
-                  <label htmlFor="numero">Número</label>
-                  <input
-                    id="numero"
-                    type="text"
-                    name="numero"
-                    value={form.values.numero}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                  />
-                  <small>
-                    {getMensagemDeErro('numero', form.errors.numero)}
-                  </small>
-                </S.EntregaInput>
-              </S.InfosContainer>
-              <S.EntregaInput>
-                <label htmlFor="complemento">Complemento (opcional)</label>
-                <input
-                  id="complemento"
-                  type="text"
-                  name="complemento"
-                  value={form.values.complemento}
-                  onChange={form.handleChange}
-                  onBlur={form.handleBlur}
-                />
-                <small>
-                  {getMensagemDeErro('complemento', form.errors.complemento)}
-                </small>
-              </S.EntregaInput>
-              <S.BotoesContainer>
-                <Botoes
-                  titulo="Clique aqui para continuar com seu pedido"
-                  tipo="botao"
-                  onClick={continuarComPagamento}
-                >
-                  Continuar com o pagamento
-                </Botoes>
-                <Botoes
-                  titulo="Clique aqui para continuar com seu pedido"
-                  tipo="botao"
-                  onClick={voltarParaCarrinho}
-                >
-                  Voltar para o carrinho
-                </Botoes>
-              </S.BotoesContainer>
-            </div>
-          </S.BarraLateral>
-        </S.CarrinhoContainer>
-      )}
-      {etapa === 'pagamento' && (
-        <S.CarrinhoContainer className={estaAberto ? 'aberto' : ''}>
-          <S.Overlay onClick={fechaCarrinho} />
-          <S.BarraLateral>
-            <h4>Pagamento - Valor a pagar R$ 190,90</h4>
-            <div>
-              <S.EntregaInput>
-                <label htmlFor="nomeNoCartao">Nome no cartão</label>
-                <input
-                  id="nomeNoCartao"
-                  type="text"
-                  name="nomeNoCartao"
-                  value={form.values.nomeNoCartao}
-                  onChange={form.handleChange}
-                  onBlur={form.handleBlur}
-                />
-                <small>
-                  {getMensagemDeErro('nomeNoCartao', form.errors.nomeNoCartao)}
-                </small>
-              </S.EntregaInput>
-              <S.NumeroCvv>
-                <S.EntregaInput>
-                  <label htmlFor="numeroNoCartao">Número do cartão</label>
-                  <input
-                    id="numeroNoCartao"
-                    type="text"
-                    className="numeroNoCartao"
-                    name="numeroNoCartao"
-                    value={form.values.numeroNoCartao}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                  />
-                  <small>
-                    {getMensagemDeErro(
-                      'numeroNoCartao',
-                      form.errors.numeroNoCartao
-                    )}
-                  </small>
-                </S.EntregaInput>
-                <S.EntregaInput>
-                  <label htmlFor="codigoDeSeguranca">CVV</label>
-                  <input
-                    id="codigoDeSeguranca"
-                    type="text"
-                    className="cvv"
-                    name="codigoDeSeguranca"
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                    value={form.values.codigoDeSeguranca}
-                  />
-                  <small>
-                    {getMensagemDeErro(
-                      'codigoDeSeguranca',
-                      form.errors.codigoDeSeguranca
-                    )}
-                  </small>
-                </S.EntregaInput>
-              </S.NumeroCvv>
-              <S.InfosContainer>
-                <S.EntregaInput>
-                  <label htmlFor="mesVencimento">Mês de vencimento</label>
-                  <input
-                    id="mesVencimento"
-                    type="text"
-                    name="mesVencimento"
-                    value={form.values.mesVencimento}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                  />
-                  <small>
-                    {getMensagemDeErro(
-                      'mesVencimento',
-                      form.errors.mesVencimento
-                    )}
-                  </small>
-                </S.EntregaInput>
-                <S.EntregaInput>
-                  <label htmlFor="anoVencimento">Ano de vencimento</label>
-                  <input
-                    id="anoVencimento"
-                    type="text"
-                    name="anoVencimento"
-                    value={form.values.anoVencimento}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                  />
-                  <small>
-                    {getMensagemDeErro(
-                      'anoVencimento',
-                      form.errors.anoVencimento
-                    )}
-                  </small>
-                </S.EntregaInput>
-              </S.InfosContainer>
-              <S.BotoesContainer>
-                <Botoes
-                  titulo="Clique aqui para continuar com seu pedido"
-                  tipo="botao"
-                  onClick={continuarParaMensagem}
-                >
-                  Finalizar pagamento
-                </Botoes>
-                <Botoes
-                  titulo="Clique aqui para continuar com seu pedido"
-                  tipo="botao"
-                  onClick={voltarParaEndereco}
-                >
-                  Voltar para edição de endereço
-                </Botoes>
-              </S.BotoesContainer>
-            </div>
-          </S.BarraLateral>
-        </S.CarrinhoContainer>
-      )}
-      {etapa === 'mensagem' && (
-        <S.CarrinhoContainer className={estaAberto ? 'aberto' : ''}>
-          <S.Overlay onClick={fechaCarrinho} />
-          <S.BarraLateral>
-            <h4>Pedido realizado - XXX</h4>
+            <h4>Pedido realizado - {data.orderId}</h4>
             <S.MensagemContainer>
               <p>
                 Estamos felizes em informar que seu pedido já está em processo
@@ -434,13 +236,219 @@ const Carrinho = () => {
             <Botoes
               titulo="Clique aqui para continuar com seu pedido"
               tipo="botao"
+              onClick={irParaHome}
             >
               Concluir
             </Botoes>
           </S.BarraLateral>
         </S.CarrinhoContainer>
+      ) : (
+        <form onSubmit={form.handleSubmit}>
+          {etapa === 'entrega' && itens.length > 0 && (
+            <S.CarrinhoContainer className={estaAberto ? 'aberto' : ''}>
+              <S.Overlay onClick={fechaCarrinho} />
+              <S.BarraLateral>
+                <h4>Entrega</h4>
+                <div>
+                  <S.EntregaInput>
+                    <label htmlFor="nomeCompleto">Quem irá receber</label>
+                    <input
+                      id="nomeCompleto"
+                      type="text"
+                      name="nomeCompleto"
+                      value={form.values.nomeCompleto}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={verificaErro('nomeCompleto') ? 'error' : ''}
+                    />
+                  </S.EntregaInput>
+                  <S.EntregaInput>
+                    <label htmlFor="endereco">Endereço</label>
+                    <input
+                      id="endereco"
+                      type="text"
+                      name="endereco"
+                      value={form.values.endereco}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={verificaErro('endereco') ? 'error' : ''}
+                    />
+                  </S.EntregaInput>
+                  <S.EntregaInput>
+                    <label htmlFor="cidade">Cidade</label>
+                    <input
+                      id="cidade"
+                      type="text"
+                      name="cidade"
+                      value={form.values.cidade}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={verificaErro('cidade') ? 'error' : ''}
+                    />
+                  </S.EntregaInput>
+                  <S.InfosContainer>
+                    <S.EntregaInput>
+                      <label htmlFor="cep">CEP</label>
+                      <InputMask
+                        id="cep"
+                        type="text"
+                        name="cep"
+                        value={form.values.cep}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                        className={verificaErro('cep') ? 'error' : ''}
+                        mask="99999-999"
+                      />
+                    </S.EntregaInput>
+                    <S.EntregaInput>
+                      <label htmlFor="numero">Número</label>
+                      <input
+                        id="numero"
+                        type="text"
+                        name="numero"
+                        value={form.values.numero}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                        className={verificaErro('numero') ? 'error' : ''}
+                      />
+                    </S.EntregaInput>
+                  </S.InfosContainer>
+                  <S.EntregaInput>
+                    <label htmlFor="complemento">Complemento (opcional)</label>
+                    <input
+                      id="complemento"
+                      type="text"
+                      name="complemento"
+                      value={form.values.complemento}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={verificaErro('complemento') ? 'error' : ''}
+                    />
+                  </S.EntregaInput>
+                  <S.BotoesContainer>
+                    <Botoes
+                      titulo="Clique aqui para continuar com seu pedido"
+                      tipo="botao"
+                      onClick={continuarComPagamento}
+                    >
+                      Continuar com o pagamento
+                    </Botoes>
+                    <Botoes
+                      titulo="Clique aqui para continuar com seu pedido"
+                      tipo="botao"
+                      onClick={voltarParaCarrinho}
+                    >
+                      Voltar para o carrinho
+                    </Botoes>
+                  </S.BotoesContainer>
+                </div>
+              </S.BarraLateral>
+            </S.CarrinhoContainer>
+          )}
+          {etapa === 'pagamento' && (
+            <S.CarrinhoContainer className={estaAberto ? 'aberto' : ''}>
+              <S.Overlay onClick={fechaCarrinho} />
+              <S.BarraLateral>
+                <h4>
+                  Pagamento - Valor a pagar {formataPreco(getPrecoTotal())}
+                </h4>
+                <div>
+                  <S.EntregaInput>
+                    <label htmlFor="nomeNoCartao">Nome no cartão</label>
+                    <input
+                      id="nomeNoCartao"
+                      type="text"
+                      name="nomeNoCartao"
+                      value={form.values.nomeNoCartao}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={verificaErro('nomeNoCartao') ? 'error' : ''}
+                    />
+                  </S.EntregaInput>
+                  <S.NumeroCvv>
+                    <S.EntregaInput>
+                      <label htmlFor="numeroNoCartao">Número do cartão</label>
+                      <InputMask
+                        id="numeroNoCartao"
+                        type="text"
+                        name="numeroNoCartao"
+                        value={form.values.numeroNoCartao}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                        className={
+                          verificaErro('numeroNoCartao') ? 'error' : ''
+                        }
+                        mask="9999 9999 9999 9999"
+                      />
+                    </S.EntregaInput>
+                    <S.EntregaInput>
+                      <label htmlFor="codigoDeSeguranca">CVV</label>
+                      <InputMask
+                        id="codigoDeSeguranca"
+                        type="text"
+                        name="codigoDeSeguranca"
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                        value={form.values.codigoDeSeguranca}
+                        className={
+                          verificaErro('codigoDeSeguranca') ? 'error' : ''
+                        }
+                        mask="999"
+                      />
+                    </S.EntregaInput>
+                  </S.NumeroCvv>
+                  <S.InfosContainer>
+                    <S.EntregaInput>
+                      <label htmlFor="mesVencimento">Mês de vencimento</label>
+                      <InputMask
+                        id="mesVencimento"
+                        type="text"
+                        name="mesVencimento"
+                        value={form.values.mesVencimento}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                        className={verificaErro('mesVencimento') ? 'error' : ''}
+                        mask="99"
+                      />
+                    </S.EntregaInput>
+                    <S.EntregaInput>
+                      <label htmlFor="anoVencimento">Ano de vencimento</label>
+                      <InputMask
+                        id="anoVencimento"
+                        type="text"
+                        name="anoVencimento"
+                        value={form.values.anoVencimento}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                        className={verificaErro('anoVencimento') ? 'error' : ''}
+                        mask="9999"
+                      />
+                    </S.EntregaInput>
+                  </S.InfosContainer>
+                  <S.BotoesContainer>
+                    <Botoes
+                      titulo="Clique aqui para continuar com seu pedido"
+                      tipo="botao"
+                      onClick={form.handleSubmit}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Finalizando compra...' : 'Finalizar compra'}
+                    </Botoes>
+                    <Botoes
+                      titulo="Clique aqui para continuar com seu pedido"
+                      tipo="botao"
+                      onClick={voltarParaEndereco}
+                    >
+                      Voltar para edição de endereço
+                    </Botoes>
+                  </S.BotoesContainer>
+                </div>
+              </S.BarraLateral>
+            </S.CarrinhoContainer>
+          )}
+        </form>
       )}
-    </form>
+    </>
   )
 }
 export default Carrinho

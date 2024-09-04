@@ -10,41 +10,24 @@ export const MenuCard = styled.div`
   padding: 8px;
   color: ${cores.bege};
   margin-bottom: 32px;
-
-  @media (max-width: ${breakpoints.tablet}) {
-    max-width: 100%;
-    max-height: 350px;
-  }
 `
 export const Imagem = styled.img`
   width: 100%;
   max-width: 304px;
   height: 167px;
   object-fit: cover;
-
-  @media (max-width: ${breakpoints.tablet}) {
-    max-width: 100%;
-  }
 `
 
 export const Titulo = styled.h3`
   font-size: 16px;
   font-weight: bold;
   margin-top: 8px;
-
-  @media (max-width: ${breakpoints.tablet}) {
-    font-size: 20px;
-  }
 `
 
 export const Texto = styled.p`
   font-size: 14px;
   line-height: 22px;
   margin: 8px 0;
-
-  @media (max-width: ${breakpoints.tablet}) {
-    font-size: 18px;
-  }
 `
 
 export const Modal = styled.div`
@@ -105,36 +88,6 @@ export const Modal = styled.div`
   p {
     color: ${cores.branco};
   }
-
-  @media (max-width: ${breakpoints.tablet}) {
-    img {
-      width: 230px;
-    }
-
-    p {
-      font-size: 16px;
-    }
-  }
-
-  @media (max-width: ${breakpoints.mobile}) {
-    .container {
-      flex-direction: row;
-      max-height: 390px;
-    }
-
-    img {
-      height: 80px;
-      width: 100%;
-    }
-
-    h4 {
-      margin-top: 6px;
-    }
-
-    p {
-      margin: 8px 0;
-    }
-  }
 `
 
 export const ModalContainer = styled.div`
@@ -158,21 +111,6 @@ export const ModalConteudo = styled.div`
     top: 8px;
     right: 8px;
     cursor: pointer;
-  }
-
-  @media (max-width: ${breakpoints.tablet}) {
-    max-width: 60%;
-    margin-left: 12px;
-  }
-
-  @media (max-width: ${breakpoints.mobile}) {
-    max-width: 100%;
-    margin-left: 0;
-
-    img {
-      height: 12px;
-      width: 12px;
-    }
   }
 `
 
