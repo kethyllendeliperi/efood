@@ -60,7 +60,7 @@ export const BarraLateral = styled.aside`
     padding: 0 8px;
 
     &.error {
-      border: 2px solid red;
+      border: 4px solid red;
     }
   }
 

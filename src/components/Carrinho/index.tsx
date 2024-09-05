@@ -40,13 +40,13 @@ const Carrinho = () => {
     },
     validationSchema: Yup.object({
       nomeCompleto: Yup.string()
-        .min(5, 'Nome incompleto.')
+        .min(3, 'Nome incompleto.')
         .required('Campo obrigatório.'),
       endereco: Yup.string()
         .min(5, 'Insira um endereço válido.')
         .required('Campo obrigatório.'),
       cidade: Yup.string()
-        .min(5, 'Insira uma cidade válido.')
+        .min(4, 'Insira uma cidade válido.')
         .required('Campo obrigatório.'),
       cep: Yup.string()
         .min(9, 'Insira um CEP válido.')
@@ -54,10 +54,10 @@ const Carrinho = () => {
       numero: Yup.string()
         .min(2, 'Insira um número válido (ex: 01).')
         .required('Campo obrigatório.'),
-      complemento: Yup.string().min(5, ''),
+      complemento: Yup.string().min(4, ''),
 
       nomeNoCartao: Yup.string()
-        .min(5, 'Nome incompleto.')
+        .min(3, 'Nome incompleto.')
         .required('Campo obrigatório.'),
       numeroNoCartao: Yup.string()
         .min(13, 'Insira um número válido')
